@@ -1,0 +1,101 @@
+/* The business logo attributes */
+#logo {
+	width: 75%;
+	height: 40%;
+	max-width: 400px;
+	margin-right: 8%;
+}
+
+.page {
+height: 200px;
+background-color: DeepSkyBlue; /* For browsers that do not support gradients */
+background-image: linear-gradient(White, DeepSkyBlue);
+}
+
+/* Set the image display orientation */
+.intro_section {
+	display: flex;
+	justify-content: center;		
+}
+
+#welcome_message {
+	margin-top: 10%;
+	font-size: 200%;
+}
+
+/* Set intro text to percentage of screen width and height, and add padding */
+#intro_text {
+	width: 70%;
+	height: 20%;
+	margin-top: 10%;	
+	max-width: 500px;
+}
+
+/* Set start button to percentage of screen width and height */
+#start_button {
+	width: 50%;
+	height: 20%;
+	max-width: 300px;
+	margin-top: 10%;
+}
+
+/* center the pharmacy title on the pharmacy details page */
+#pharmacies_title {	
+	text-align: center;	
+}
+
+/* override jQuery Mobile css for ui-btn font size */
+.ui-btn {
+	font-size: 1.3em !important
+}
+
+/* set big text button font size */
+.big_text_btn {
+	font-size: 1.5em !important
+}
+
+/* for select buttons, reduce font size */
+#settings_button, #home_button1, #home_button2, #home_button3,
+#home_button3, #login_page_button, #back_to_results_button {
+	font-size: 0.9em !important
+}
+
+/* align text for "km away" to the right, and reduce font size */
+.distance_away {	
+	text-align: right;	
+	font-size: 0.8em !important		
+}
+
+#opening_hours_text, #address {
+	font-size: 0.9em !important	
+}
+
+/* change colour of selected heading and id */
+h2, #open_status, #login_status {	
+	color: Red;	
+}
+
+/* set heading aligned to left and text colour to a dark grey */
+h3 {
+	color: DimGrey;	
+	text-align: left;	
+}
+
+
+
+
+
+
+
+
+/* edit flipswitch ui button elements, due to changing jquery css */
+.ui-flipswitch .ui-btn.ui-flipswitch-on {
+	text-indent: -2.4em;
+	font-size: 1em !important
+}
+.ui-flipswitch .ui-flipswitch-off {
+	text-indent: 1em;
+	font-size: 1em !important
+}
+
+

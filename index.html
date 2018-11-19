@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"> 
+	<head>
+		<title>Find A Chemist</title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" >
+		<meta name="apple-mobile-web-app-capable" content="yes" >
+		
+		<meta http-equiv="Content-Security-Policy"
+			content="default-src 'self' http://192.168.0.2:3000/ https://192.168.0.2:3000/ http://localhost:3000/; 			
+			style-src 'self' 'unsafe-inline' http://code.jquery.com/; img-src * data:;
+			script-src 'self' 'unsafe-inline' 'unsafe-eval' http://code.jquery.com/
+			http://code.jquery.com/
+			https://maps.googleapis.com/">	
+		
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<link href="FindAChemist.css" type="text/css" rel="stylesheet">
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="FindAChemist.js"></script> 
+		<script src="./crossdomain-ajax.js"></script> 
+						
+		<!-- Google Places API Library - NOTE: a valid Google API Key is needed to replace 'XXXX' -->
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key= XXXX &libraries=places"></script>		
+	</head>
+	<body>
+		<!-- Home Page div -->
+		<div class="page" id="home" data-role="page"> 
+			<div data-role="header" data-position="fixed">	
+				<a class="ui-btn-left" id="login_page_button"  data-role="button" data-icon="user">Login</a>	
+				<h1><img class="logo_icon" id="logo" src="./images/LogoFull.png"/></h1>
+				<a class="ui-btn-right" id="settings_button"  data-role="button" data-icon="gear">Settings</a>				
+			</div> 
+			<div align="center">	
+				<h1 id="welcome_message">Welcome!</h1>
+				<img class="intro_section" id="intro_text" src="./images/IntroText.png" alt="Find your nearest pharmacy now!">
+				<img class="intro_section" id="start_button" src="./images/StartButton.png" alt="Start Button">		
+			</div>	
+			<div data-role="footer" data-position="fixed">
+				<h1>&copy Peter McBurney (Student# Q9707351)</h1>				
+			</div> 
+		</div>
+	
+		<!-- Settings Page div -->
+		<div class="page" id="settings" data-role="page">		
+			<div data-role="header" data-position="fixed">
+				<a class="ui-btn-left" id="home_button1" href="#home" data-role="button" data-icon="back">Back</a>
+				<h1><img class="logo_icon" id="logo" src="./images/LogoFull.png"/></h1>								
+			</div> 						
+			<div data-role="content">	
+				<h1 id="pharmacies_title">Settings</h1><hr>
+				<label for="search_range_slider">Search Range (km):</label>
+				<input type="range" name="search_range_slider" id="search_range_slider" value="3" min="1.0" max="10.0" step="0.1" >
+				<hr>
+				<label for="no_of_results_slider">Maximum number of search results:</label>
+				<input type="range" name="no_of_results_slider" id="no_of_results_slider" value="10" min="1" max="30">
+				<hr>
+				<fieldset>
+				  <div data-role="fieldcontain">
+					<label for="only_open_pharmacies_checkbox">Display only open pharmacies:</label>
+					<select id="only_open_pharmacies_checkbox" data-role="flipswitch">
+					  <option value="no">No</option>
+					  <option value="yes" selected>Yes</option>
+					</select>
+				  </div>
+				</fieldset>
+				<hr>	
+				<button class="big_text_btn" id="save_settings_button" data-role="button">Save Settings</button>	
+			</div> 				
+		</div>
+		
+		<!-- Login Page div -->
+		<div class="page" id="login" data-role="page">		
+			<div data-role="header" data-position="fixed">
+				<a class="ui-btn-left" id="home_button2" href="#home" data-role="button" data-icon="back">Back</a>
+				<h1><img class="logo_icon" id="logo" src="./images/LogoFull.png"/></h1>								
+			</div> 
+			<div data-role="content">	
+				<h1 id="login_title">Login Details</h1><hr>
+				<p>(for testing purposes: username = "admin" and password = "admin")</p><hr>
+				<h3 id="login_status">Currently logged out</h3><hr>	
+				<label for="username_textbox">Username:</label>
+				<input id="username_textbox" type="text" data-clear-btn="true" placeholder="Enter username">			
+				<label for="password_textbox">Password:</label>
+				<input id="password_textbox" type="password" data-clear-btn="true" autocomplete="off" placeholder="Enter password">
+				<br>
+				<label for="show_pw_checkbox">Show password</label>
+				<input id="show_pw_checkbox" type="checkbox" data-mini="true">
+				<br>	
+				<label for="remember_login_checkbox">Remember login details</label>
+				<input id="remember_login_checkbox" type="checkbox" data-mini="true">
+				<br>	
+				<label for="auto_login_checkbox">Login automatically</label>
+				<input id="auto_login_checkbox" type="checkbox" data-mini="true">
+				<br><hr>
+				<button class="big_text_btn ui-btn ui-btn-inline ui-corner-all" id="login_button"  data-role="button">Login</button>
+				<button class="big_text_btn ui-btn ui-btn-inline ui-corner-all" id="logout_button"  data-role="button">Logout</button>
+				<button class="big_text_btn ui-btn ui-btn-inline ui-corner-all" id="register_page_button"  data-role="button">Register</button>
+			</div> 					 	
+		</div>
+			
+		<!-- Register Page div -->
+		<div class="page" id="register" data-role="page">		
+			<div data-role="header" data-position="fixed">
+				<a class="ui-btn-left" id="home_button3" href="#home" data-role="button" data-icon="home">Home</a>
+				<h1><img class="logo_icon" id="logo" src="./images/LogoFull.png"/></h1>								
+			</div> 
+			<div data-role="content">	
+				<h1 id="login_title">Registration Details</h1><hr>
+				<p>Find A Chemist Registration cost: $5 per month</p><hr>
+				<label for="username_register_textbox">Username:</label>
+				<input id="username_register_textbox" type="text" data-clear-btn="true" placeholder="Enter username">			
+				<label for="password_register_textbox">Password:</label>
+				<input id="password_register_textbox" type="password" data-clear-btn="true" autocomplete="off" placeholder="Enter password">
+				<hr><p>Credit Card Details (currently disabled - test implementation)</p><hr>
+				<label for="register_ccard_textbox">Credit Card Number:</label>
+				<input id="register_ccard_textbox" type="password" data-clear-btn="true" disabled="true" autocomplete="off" placeholder="Enter credit card number: XXXX-XXXX-XXXX-XXXX">	
+				<label for="register_ccard_exp_textbox">Credit Card Expiry:</label>
+				<input id="register_ccard_exp_textbox" type="password" data-clear-btn="true" disabled="true" autocomplete="off" placeholder="Enter credit expiry: MM-YY">
+				<label for="register_ccard_CCV_textbox">Credit Card CCV:</label>
+				<input id="register_ccard_CCV_textbox" type="password" data-clear-btn="true" disabled="true" autocomplete="off" placeholder="Enter credit CCV: XXX">
+				<br><hr>
+				<button class="big_text_btn ui-btn ui-btn-inline ui-corner-all" id="register_button"  data-role="button">Register</button>
+			</div> 					 	
+		</div>	
+			
+		<!-- Show Pharmacies Page div -->
+		<div class="page" id="show_pharmacies" data-role="page">
+			<div data-role="header" data-position="fixed">
+				<a class="ui-btn-left" id="home_button3" href="#home" data-role="button" data-icon="back">Back</a>
+				<h1><img class="logo_icon" id="logo" src="./images/LogoFull.png"/></h1>								
+			</div>
+			<div data-role="content">
+				<h1 class="title" id="pharmacies_title">Pharmacies nearby</h1>
+				<ul id="pharmacy_list" data-role="listview">
+					<li data-icon="false"><a></a></li>     
+				</ul>
+			</div> 				 
+		</div>		
+		
+		<!-- Pharmacy Details Page div -->
+		<div class="page" id="pharmacy_details" data-role="page">
+			<div data-role="header" data-position="fixed">
+				<a class="ui-btn-left" id="back_to_results_button" data-role="button" data-icon="back">Back</a>
+				<h1><img class="logo_icon" id="logo" src="./images/LogoFull.png"/></h1>								
+			</div>
+			<div data-role="content">
+				<h1 id="pharmacies_title">Pharmacy Details</h1>
+				<ul id="pharmacy_details_view" data-role="listview">
+					<li data-icon="false">
+						<a class="ui-btn">
+							<h1 id="pharmacy_name"></h1>
+							<h2 class="distance_away" id="details_page_dist_away"></h2>
+							<h3 id="address"></h3>						
+							<h3 id="phone_number"></h3>
+							<h3 id="open_status"></h3>
+							<h3>Opening Hours:</h3>	
+							<h3 id="opening_hours_text"></h3>	
+						</a>
+					</li>					
+				</ul>
+			</div>									 
+		</div>
+
+		<!-- Show Map Page div - not currently implemented -->
+		<div class="page" id="show_map" data-role="page">
+			<div data-role="header" data-position="fixed">
+				<a class="ui-btn-left" id="home_button" href="#home" data-role="button" data-icon="home">Home</a>
+				<h1><img class="logo_icon" id="logo" src="./images/LogoFull.png"/></h1>								
+			</div>		
+			<div data-role="content">
+				<div id="map"></div>
+			</div> 	 
+		</div>
+	</body>	
+</html>
